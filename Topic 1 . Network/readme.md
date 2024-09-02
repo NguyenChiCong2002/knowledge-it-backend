@@ -18,7 +18,7 @@ DNS stands for **Domain Name System**. It is a critical component of the interne
 
 DNS functions through a series of steps to resolve a domain name to its corresponding IP address.
 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/lap13605/Desktop/knowledge-it-backend/Topic%201%20.%20Network/flow-dns.png?version%3D1725264546253)
+![DNS Flow](./flow-dns.png)
 
 #### Step-by-Step Process:
 
