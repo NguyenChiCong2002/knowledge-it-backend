@@ -73,9 +73,30 @@ These IP addresses enable load balancing and geographic distribution.
 - **Complexity:** Managing DNS, especially with advanced configurations like DNSSEC, load balancing, or geo-DNS, can be complex and error-prone.
 
 
-## Part 2: Communication Protocols
+## Part 2: Communication Protocols 
 
-### 1. HTTP
+### 1. HTTP (Hypertext Transfer Protocol)
+
+#### What is HTTP ?
+
+- HTTP (Hypertext Transfer Protocol) is the foundation of data communication on the web. It's a protocol used for transferring hypertext requests and information on the internet.
+It allows web browsers and servers to communicate by exchanging requests and responses.
+
+#### How Does HTTP Work?
+
+- Client Request: When you enter a URL into your browser, the browser sends an HTTP request to the server where the website is hosted.
+
+- Server Response: The server processes the request and sends back an HTTP response. This response typically includes the requested web page, along with other resources like images, stylesheets, or scripts.
+
+- Stateless Protocol: HTTP is stateless, meaning each request is independent, and the server doesn’t retain session information between requests.
+
+#### Why Use HTTP?
+
+- Simplicity: HTTP is simple to use and widely supported by all web browsers and servers.
+
+- Flexibility: It supports a variety of data types and methods, including GET, POST, PUT, DELETE, etc.
+Interoperability: HTTP is a standard protocol used by all web applications, making it the backbone of the World Wide Web.
+
 ### 2. GRPC
 ### 3. Compare GRPC and HTTP
 ### 4. Compare Http 2.0 and Http 1.1
