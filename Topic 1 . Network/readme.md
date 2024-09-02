@@ -77,12 +77,12 @@ These IP addresses enable load balancing and geographic distribution.
 
 ### 1. HTTP (Hypertext Transfer Protocol)
 
-#### What is HTTP ?
+#### 1.1 What is HTTP ?
 
 - HTTP (Hypertext Transfer Protocol) is the foundation of data communication on the web. It's a protocol used for transferring hypertext requests and information on the internet.
 It allows web browsers and servers to communicate by exchanging requests and responses.
 
-#### How Does HTTP Work?
+#### 1.2 How Does HTTP Work?
 
 - Client Request: When you enter a URL into your browser, the browser sends an HTTP request to the server where the website is hosted.
 
@@ -90,7 +90,7 @@ It allows web browsers and servers to communicate by exchanging requests and res
 
 - Stateless Protocol: HTTP is stateless, meaning each request is independent, and the server doesn’t retain session information between requests.
 
-#### Why Use HTTP?
+#### 1.3 Why Use HTTP?
 
 - Simplicity: HTTP is simple to use and widely supported by all web browsers and servers.
 
@@ -100,5 +100,6 @@ Interoperability: HTTP is a standard protocol used by all web applications, maki
 ### 2. GRPC
 ### 3. Compare GRPC and HTTP
 ### 4. Compare Http 2.0 and Http 1.1
+### 5. Communication Protocols In System Design
 
 ## Part 3: Demo client server communication GRPC
