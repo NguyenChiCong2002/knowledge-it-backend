@@ -69,3 +69,13 @@ These IP addresses enable load balancing and geographic distribution.
 - **Security Vulnerabilities:** DNS is susceptible to various attacks, such as DNS spoofing, cache poisoning, and Distributed Denial of Service (DDoS) attacks, which can disrupt internet access.
 - **Latency:** Each DNS query adds a small delay to web requests, though caching helps mitigate this.
 - **Complexity:** Managing DNS, especially with advanced configurations like DNSSEC, load balancing, or geo-DNS, can be complex and error-prone.
+
+
+## Part 2: Communication Protocols
+
+### 1. HTTP
+### 2. GRPC
+### 3. Compare GRPC and HTTP
+### 4. Compare Http 2.0 and Http 1.1
+
+## Part 3: Demo client server communication GRPC
