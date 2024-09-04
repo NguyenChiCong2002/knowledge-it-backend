@@ -18,7 +18,7 @@ DNS stands for **Domain Name System**. It is a critical component of the interne
 
 DNS functions through a series of steps to resolve a domain name to its corresponding IP address.
 
-![DNS Flow](./flow-dns.png)
+![DNS Flow](./images/flow-dns.png)
 
 #### Step-by-Step Process:
 
@@ -143,10 +143,10 @@ These IP addresses enable load balancing and geographic distribution.
 
 #### Cors HTTP
 
-![alt text](./http.png)
+![alt text](./images/http.png)
 
 #### 1.4 Below are common HTTP verbs
-![alt text](./image.png)
+![alt text](./images/http.png)
 
 #### 1.5 HTTP vs HTTPS
 1. HTTP:
@@ -166,7 +166,7 @@ Great explanation of TLS as the successor to SSL. You might also want to highlig
 
 #### Why using HTTPS ?  
 
-![alt text](./compare_http_vs_https.png)
+![alt text](./images/compare_http_vs_https.png)
 + Data Confidentiality: Ensures that data is encrypted and inaccessible to unauthorized users.
 + Data Integrity: Protects data from being modified or corrupted during transmission.
 + Authentication: Verifies the identity of the communicating parties, ensuring that users are connected to the legitimate website (prevents phishing attacks).
@@ -174,7 +174,7 @@ Great explanation of TLS as the successor to SSL. You might also want to highlig
 
 ##### Step-by-Step HTTPS Flow
 
-![alt text](./step_by_step_https.png)
+![alt text](./images/step_by_step_https.png)
 
 ###### 1. Client Request:
 - Customer A types `https://www.facebook.com` in the browser.
@@ -209,9 +209,47 @@ Great explanation of TLS as the successor to SSL. You might also want to highlig
 ###### 9. Hacker Attempts:
 - A hacker may try to intercept the data but only sees encrypted information, which they cannot decrypt without the session key.
 
+#### HTTPS Security Indicators in Chrome
+
+##### Overview
+This repository provides information about the different HTTPS security indicators used in the Chrome browser and how to interpret them. Understanding these indicators helps you ensure that your browsing sessions are secure and that you are protected from potential cyber threats like Man-in-the-Middle (MITM) attacks.
+
+##### Security Indicators
+
+###### 1. Green Padlock ![alt text](./images/green_padlock.png)
+- **Description:** Indicates a secure connection with a trusted site.
+- **Action:** No action needed. You can trust this site.
+
+###### 2. Yellow Bang (!) ![alt text](./images/yellow_bang.png)
+- **Description:** The connection is unencrypted, meaning the site is using HTTP.
+- **Action:** Avoid entering sensitive information. Your data could be intercepted.
+
+###### 3. Grey Padlock / Red Padlock ![alt text](./images/grey_and_red.png)
+- **Grey Padlock:**
+  - **Description:** The connection is partially encrypted. There may be mixed content on the page.
+  - **Action:** Be cautious. Understand the risks before proceeding.
+  
+- **Red Padlock:**
+  - **Description:** Indicates a serious issue with the site's security. Possible reasons include:
+    - Self-signed or untrusted SSL/TLS certificate.
+    - Domain mismatch.
+    - Potential MITM attack.
+  - **Action:** Do not enter any sensitive information. Leave the site unless you are sure it's safe.
+
+##### Detailed Connection Information
+To get more information about the connection:
+1. Click on the padlock or warning icon in the Chrome address bar.
+2. Review the details about the site's certificate, encryption, and any detected issues.
+3. Make an informed decision on whether to proceed or leave the site.
+
+##### Conclusion
+Always pay attention to the HTTPS indicators in your browser to ensure your online activities are secure. If you encounter any issues, use the detailed connection information to understand the risks and decide the best course of action.
 
 ### 2. GRPC
+
 ### 3. Compare GRPC and HTTP
 ### 4. Compare Http 2.0 and Http 1.1
+### 5. What happen when you type a URL into your browser ? 
+![alt text](./images/flow_type_URL_in_browser.png)
 
 ## Part 3: Demo client server communication GRPC
