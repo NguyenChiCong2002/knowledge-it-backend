@@ -164,7 +164,7 @@ Good mention of SSL as an older protocol. You could also clarify that SSL has be
 ###### TLS:
 Great explanation of TLS as the successor to SSL. You might also want to highlight the specific advancements in TLS 1.3, such as faster handshakes (which reduce latency) and the removal of outdated cryptographic algorithms, making it more secure and efficient.
 
-##### Why using HTTPS ?  
+#### Why using HTTPS ?  
 
 ![alt text](./compare_http_vs_https.png)
 + Data Confidentiality: Ensures that data is encrypted and inaccessible to unauthorized users.
