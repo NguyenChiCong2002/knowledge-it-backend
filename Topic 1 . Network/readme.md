@@ -166,7 +166,7 @@ Great explanation of TLS as the successor to SSL. You might also want to highlig
 
 ##### Why using HTTPS ?  
 
-![alt text](./compare_ht tp_vs_https.png)
+![alt text](./compare_http_vs_https.png)
 + Data Confidentiality: Ensures that data is encrypted and inaccessible to unauthorized users.
 + Data Integrity: Protects data from being modified or corrupted during transmission.
 + Authentication: Verifies the identity of the communicating parties, ensuring that users are connected to the legitimate website (prevents phishing attacks).
