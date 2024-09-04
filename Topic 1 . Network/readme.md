@@ -26,28 +26,41 @@ DNS functions through a series of steps to resolve a domain name to its correspo
    - A user opens a web browser, enters a domain (e.g., `www.example.com`), and presses Enter.
 
 2. **Local DNS Cache Check:**
-   - The computer checks its local DNS cache (in RAM) to see if it already knows the IP address of the domain. If cached, it skips the following steps.
+   - The computer checks its local DNS cache (in RAM) to see if it already knows the IP address of the domain. If found, the process skips to step 8.
 
-3. **DNS Query to Resolver:**
-   - If the IP address is not cached, the computer sends a DNS query to a DNS resolver, typically provided by the user's Internet Service Provider (ISP).
+3. **Query to DNS Recursive Resolver:**
+   - If the IP is not cached, the request is sent to a DNS recursive resolver (usually provided by the ISP).
 
-4. **Query to Root Name Server:**
-   - The DNS resolver forwards the request to a DNS root name server if it cannot resolve the domain itself.
+4. **Root Name Server Query:**
+   - The resolver queries a Root Name Server, which directs it to the appropriate Top-Level Domain (TLD) server.
+   - Example:
+      1) Generic Top-Level Domains:
+         + .com (commercial)
+         + .org (organization)
+         + .net (network)
+         + .info (information)
+         + .biz (business)
+      2) Country Code Top-Level Domains
+         + .uk (United Kingdom)
+         + .jp (Japan)
+         + .fr (France)
+         + .cn (China)
+      3) Sponsored Top-Level Domains 
+         + .edu (education, sponsored by EDUCAUSE)
+         + .gov (government, sponsored by the U.S. government)
+         + .mil (military, sponsored by the U.S. Department of Defense)
 
-5. **Name Server Response:**
-   - If the root name server does not have the information, it directs the query to the appropriate top-level domain (TLD) server (e.g., `.com` for `www.example.com`).
+5. **TLD and Authoritative Name Server Query:**
+   - The resolver then queries the TLD server, which points it to the domain's Authoritative Name Server to get the IP address.
 
-6. **Authoritative Name Server Query:**
-   - The TLD server then forwards the request to the domain's authoritative name server, which knows the exact IP address of the domain.
+6. **IP Address Resolution:**
+   - TThe Authoritative Name Server provides the IP address for the domain.
 
-7. **IP Address Resolution:**
-   - The authoritative name server responds with the IP address of the domain.
+7. **Return IP to Browser:**
+   - The resolver returns the IP address to the browser.
 
 8. **Content Retrieval:**
-   - The web browser sends an HTTP or HTTPS request to the server at the resolved IP address.
-
-9. **Webpage Display:**
-   - The server sends the requested content back to the browser, which then displays the webpage.
+   - The browser uses the IP address to request content from the server and displays the webpage.
 
 #### Example: DNS with Multiple IP Addresses
 
@@ -68,10 +81,41 @@ These IP addresses enable load balancing and geographic distribution.
 
 #### Cons
 
-- **Security Vulnerabilities:** DNS is susceptible to various attacks, such as DNS spoofing, cache poisoning, and Distributed Denial of Service (DDoS) attacks, which can disrupt internet access.
+- **Complex:** DNS server management could be complex and is generally managed by governments, ISPs, and large companies.
 - **Latency:** Each DNS query adds a small delay to web requests, though caching helps mitigate this.
-- **Complexity:** Managing DNS, especially with advanced configurations like DNSSEC, load balancing, or geo-DNS, can be complex and error-prone.
+- **DDos attack:** DNS services have recently come under DDoS attack, preventing users from accessing websites such as Twitter without knowing Twitter's IP address(es).
 
+### 4. Top 6 Most Popular DNS Servers Today
+
+1. **Google DNS**
+   - **Preferred DNS Server:** `8.8.8.8`
+   - **Alternate DNS Server:** `8.8.4.4`
+   - **Overview:** Google DNS is widely used for its speed and reliability.
+
+2. **OpenDNS**
+   - **Preferred DNS Server:** `208.67.222.222`
+   - **Alternate DNS Server:** `208.67.220.220`
+   - **Overview:** A free and popular DNS service, second only to Google DNS.
+
+3. **Cloudflare DNS**
+   - **Preferred DNS Server:** `1.1.1.1`
+   - **Alternate DNS Server:** `1.0.0.1`
+   - **Overview:** Known for its security and privacy features, Cloudflare DNS also routes traffic through its protective layer.
+
+4. **VNPT DNS**
+   - **Preferred DNS Server:** `203.162.4.191`
+   - **Alternate DNS Server:** `203.162.4.190`
+   - **Overview:** The DNS service provided by VNPT, a major telecom operator in Vietnam.
+
+5. **Viettel DNS**
+   - **Preferred DNS Server:** `203.113.131.1`
+   - **Alternate DNS Server:** `203.113.131.2`
+   - **Overview:** Viettel’s DNS servers, used by subscribers of the Viettel network in Vietnam.
+
+6. **FPT DNS**
+   - **Preferred DNS Server:** `210.245.24.20`
+   - **Alternate DNS Server:** `210.245.24.22`
+   - **Overview:** DNS servers provided by FPT, another leading ISP in Vietnam.
 
 ## Part 2: Communication Protocols 
 
@@ -79,12 +123,13 @@ These IP addresses enable load balancing and geographic distribution.
 
 #### 1.1 What is HTTP ?
 
-- HTTP (Hypertext Transfer Protocol) is the foundation of data communication on the web. It's a protocol used for transferring hypertext requests and information on the internet.
-It allows web browsers and servers to communicate by exchanging requests and responses.
+- HTTP is a method for encoding and transporting information between a client (such as a web browser) and a web server. HTTP is the primary protocol for transmission of information across the internet.
 
 #### 1.2 How Does HTTP Work?
 
-- Client Request: When you enter a URL into your browser, the browser sends an HTTP request to the server where the website is hosted.
+#### Step-by-Step Process:
+
+1. **Client Request:** When you enter a URL into your browser, the browser sends an HTTP request to the server where the website is hosted.
 
 - Server Response: The server processes the request and sends back an HTTP response. This response typically includes the requested web page, along with other resources like images, stylesheets, or scripts.
 
@@ -94,12 +139,79 @@ It allows web browsers and servers to communicate by exchanging requests and res
 
 - Simplicity: HTTP is simple to use and widely supported by all web browsers and servers.
 
-- Flexibility: It supports a variety of data types and methods, including GET, POST, PUT, DELETE, etc.
-Interoperability: HTTP is a standard protocol used by all web applications, making it the backbone of the World Wide Web.
+- Flexibility: It supports a variety of data types and methods, including GET, POST, PUT, DELETE, PATCH.
+
+#### Cors HTTP
+
+![alt text](./http.png)
+
+#### 1.4 Below are common HTTP verbs
+![alt text](./image.png)
+
+#### 1.5 HTTP vs HTTPS
+1. HTTP:
+HTTP stands for Hypertext Transfer Protocol. It is the foundation of data communication on the web. However, HTTP data is transmitted in plaintext, making it vulnerable to interception and attacks.
+
+2. HTTPS:
+HTTPS (Hypertext Transfer Protocol Secure):
+HTTPS is not a separate protocol but rather a combination of HTTP and TLS (or SSL in older implementations). It is the secure version of the standard HTTP protocol used for transmitting data between a client's web browser and a web server. When a website uses HTTPS, it means that the data exchanged between the client and the server is encrypted using TLS or SSL, ensuring that it cannot be intercepted or tampered with by unauthorized parties.
+
+##### SSL vs TLS:
+
+###### SSL:
+Good mention of SSL as an older protocol. You could also clarify that SSL has been deprecated due to vulnerabilities like the POODLE attack and that modern browsers have completely phased out SSL support.
+
+###### TLS:
+Great explanation of TLS as the successor to SSL. You might also want to highlight the specific advancements in TLS 1.3, such as faster handshakes (which reduce latency) and the removal of outdated cryptographic algorithms, making it more secure and efficient.
+
+##### Why using HTTPS ?  
+
+![alt text](./compare_ht tp_vs_https.png)
++ Data Confidentiality: Ensures that data is encrypted and inaccessible to unauthorized users.
++ Data Integrity: Protects data from being modified or corrupted during transmission.
++ Authentication: Verifies the identity of the communicating parties, ensuring that users are connected to the legitimate website (prevents phishing attacks).
++ SEO Benefits: Search engines like Google rank HTTPS websites higher than HTTP sites.
+
+##### Step-by-Step HTTPS Flow
+
+![alt text](./step_by_step_https.png)
+
+###### 1. Client Request:
+- Customer A types `https://www.facebook.com` in the browser.
+- Sends a request to connect to Facebook's server.
+
+###### 2. TCP Handshake:
+- Establishes a basic connection between Customer A and Facebook.
+- Steps: `SYN → SYN-ACK → ACK`.
+
+###### 3. SSL/TLS Handshake Begins:
+- Client (Customer A) sends a `ClientHello` message, including supported SSL/TLS versions and cipher suites.
+
+###### 4. Server Responds:
+- Server (Facebook) replies with a `ServerHello`, including its SSL certificate (with Facebook’s public key), and chosen SSL/TLS version and cipher suite.
+
+###### 5. Certificate Verification:
+- Client using public key in something called asymmetric encryption a piece of data that is encrypted by a public can only decrypted by the private key 
+- Client verifies Facebook’s SSL certificate.
+- If valid, the handshake continues.
+
+###### 6. Session Key Generation:
+- Client creates a pre-master secret (session key), encrypts it using Facebook's public key, and sends it to Facebook.
+- Both the client and server generate a session key from this secret.
+
+###### 7. Encrypted Data Transmission:
+- Client encrypts sensitive data (e.g., username and password) using the session key and sends it to Facebook.
+
+###### 8. Secure Communication:
+- Server (Facebook) decrypts the data using the session key it with its private key.
+- Communication continues securely.
+
+###### 9. Hacker Attempts:
+- A hacker may try to intercept the data but only sees encrypted information, which they cannot decrypt without the session key.
+
 
 ### 2. GRPC
 ### 3. Compare GRPC and HTTP
 ### 4. Compare Http 2.0 and Http 1.1
-### 5. Communication Protocols In System Design
 
 ## Part 3: Demo client server communication GRPC
