@@ -6,6 +6,30 @@ This topic covers the basics of networks, divided into three main parts:
 - **Part 2: Communication Protocols**
 - **Part 3: Demo - Client-Server Communication with gRPC**
 
+# Table of Contents
+
+1. [Overview of DNS](#overview-of-dns)
+   - Introduction to DNS
+   - How DNS Works
+   - Pros and Cons of DNS
+   - Popular DNS Servers
+
+2. [Communication Protocols](#communication-protocols)
+   - [HTTP and HTTPS](#http-and-https)
+     - How HTTP and HTTPS Work
+     - Differences Between HTTP and HTTPS
+     - Security Indicators in Chrome Browser
+   - [GRPC](#grpc)
+     - Basic Concepts
+     - How GRPC Works
+     - Reasons to Use GRPC
+     - Comparison of GRPC and HTTP/2
+
+3. [Comparison of HTTP/2.0 and HTTP/1.1](#comparison-of-http20-and-http11)
+   - Improvements of HTTP/1.1 Over HTTP/1.0
+   - Issues with HTTP/1.1
+   - Enhancements in HTTP/2
+
 ## Part 1: Overview of DNS
 
 ### 1. What is DNS?
