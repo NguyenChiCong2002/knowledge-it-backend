@@ -122,7 +122,6 @@ These IP addresses enable load balancing and geographic distribution.
 ### 1. HTTP (Hypertext Transfer Protocol)
 
 #### 1.1 What is HTTP ?
-
 - HTTP is a method for encoding and transporting information between a client (such as a web browser) and a web server. HTTP is the primary protocol for transmission of information across the internet.
 
 #### 1.2 How Does HTTP Work?
@@ -145,10 +144,7 @@ These IP addresses enable load balancing and geographic distribution.
 
 ![alt text](./images/http.png)
 
-#### 1.4 Below are common HTTP verbs
-![alt text](./images/http.png)
-
-#### 1.5 HTTP vs HTTPS
+#### 1.4 HTTP vs HTTPS
 1. HTTP:
 HTTP stands for Hypertext Transfer Protocol. It is the foundation of data communication on the web. However, HTTP data is transmitted in plaintext, making it vulnerable to interception and attacks.
 
@@ -212,29 +208,33 @@ Great explanation of TLS as the successor to SSL. You might also want to highlig
 #### HTTPS Security Indicators in Chrome
 
 ##### Overview
-This repository provides information about the different HTTPS security indicators used in the Chrome browser and how to interpret them. Understanding these indicators helps you ensure that your browsing sessions are secure and that you are protected from potential cyber threats like Man-in-the-Middle (MITM) attacks.
+In the context of HTTPS Security Indicators in Chrome, Root CA and Intermediate CA are critical components of the trust system that browsers, like Chrome, use to verify the security of a website. These Certificate Authorities (CAs) ensure that the site's certificate is valid and that your connection is secure. Here's how they fit into Chrome's security indicators:
 
 ##### Security Indicators
 
+![alt text](./images/security_certificate.png)
+
+###### Example: ![alt text](./images/https_red_icons_cross_out.png)
+
 ###### 1. Green Padlock ![alt text](./images/green_padlock.png)
-- **Description:** Indicates a secure connection with a trusted site.
-- **Action:** No action needed. You can trust this site.
+- **Root and Intermediate CAs:** The green padlock appears when the website's SSL/TLS certificate is issued by a trusted Root CA and Intermediate CA. These certificates are part of a valid, secure chain of trust, meaning that Chrome can verify the site's identity and trustworthiness.
+- **Action:** No action is required. Chrome recognizes that the website's certificate is properly issued and the connection is encrypted.
 
 ###### 2. Yellow Bang (!) ![alt text](./images/yellow_bang.png)
-- **Description:** The connection is unencrypted, meaning the site is using HTTP.
-- **Action:** Avoid entering sensitive information. Your data could be intercepted.
+- **Root and Intermediate CAs:** The yellow bang usually indicates an insecure connection (HTTP) or mixed content (HTTP and HTTPS). Although certificates from Root and Intermediate CAs may be valid, the site is not fully secure because some parts are served over an unencrypted connection.
+- **Action:** Be cautious. While the certificates might be valid, the lack of full encryption makes the site less secure.
 
 ###### 3. Grey Padlock / Red Padlock ![alt text](./images/grey_and_red.png)
 - **Grey Padlock:**
-  - **Description:** The connection is partially encrypted. There may be mixed content on the page.
-  - **Action:** Be cautious. Understand the risks before proceeding.
+  - **Intermediate CA:** The grey padlock often appears when the site is using a valid certificate from an Intermediate CA but also includes elements served over an unencrypted HTTP connection.
+  - **Action:** Mixed content can expose you to risks, even though the primary certificate chain (Root to Intermediate CA) is valid. Proceed with caution.
   
 - **Red Padlock:**
-  - **Description:** Indicates a serious issue with the site's security. Possible reasons include:
-    - Self-signed or untrusted SSL/TLS certificate.
-    - Domain mismatch.
-    - Potential MITM attack.
-  - **Action:** Do not enter any sensitive information. Leave the site unless you are sure it's safe.
+  - **Root and Intermediate CA Failure:** The red padlock appears when there’s a major issue with the certificate, such as:
+    - The certificate is self-signed or issued by an untrusted CA.
+    - There’s a domain mismatch or certificate expiration.
+    - The Intermediate CA may be compromised or not properly signed by a trusted Root CA.
+  - **Action:** Chrome flags this as a serious security risk. Do not proceed unless you can verify the site's security (e.g., in a development environment). Otherwise, this may indicate a potential Man-in-the-Middle (MITM) attack or other serious vulnerabilities.
 
 ##### Detailed Connection Information
 To get more information about the connection:
@@ -247,9 +247,179 @@ Always pay attention to the HTTPS indicators in your browser to ensure your onli
 
 ### 2. GRPC
 
-### 3. Compare GRPC and HTTP
-### 4. Compare Http 2.0 and Http 1.1
+#### 2.1 what is GRPC ? 
+gRPC is a highly efficient way for services (apps, programs, servers) to communicate with each other over a network. It’s designed to be fast, cross-language, and highly scalable. 
+
+##### Simple Explanation:
+Imagine you have two friends (services) who speak different languages, like Python and Go, and they need to communicate quickly and clearly. gRPC allows them to talk to each other seamlessly, even though they speak different languages.
+
+In simple terms, gRPC allows two services to call each other's functions as if they were part of the same program, even though they might be on different servers.
+
+##### example communication GRPC
+![gRPC Example](./images/grpc.png)
+
+#### 2.2 How do GRPC work ? 
+
+Think of gRPC like two friends sharing information. They first agree on how to talk and what messages to send. In gRPC, this "agreement" is a `.proto` file, which is like a common language both friends (services) understand.
+
+##### 2.2.1 Define the Conversation with `.proto` file
+
+The `.proto` file defines:
+- **Services:** What methods can be called.
+- **Messages:** What information will be sent and received.
+
+Service: Chat has a method SendMessage.
+Request: MessageRequest sends a text.
+Response: MessageResponse sends back a reply.
+
+
+##### 2.2.2 Generate Code for Each Language
+gRPC automatically generates code from the .proto file for different programming languages. For example:
+
+Your Python service will understand the code.
+Your Go service will also understand the code.
+
+##### 2.3 Server Side (Friend A)
+The server implements the method from the .proto file and listens for requests. Think of the server like a friend waiting for a message.
+
+Here’s a server-side implementation in Go:
+
+func (s *server) SendMessage(ctx context.Context, req *pb.MessageRequest) (*pb.MessageResponse, error) {
+    return &pb.MessageResponse{Reply: "Got your message: " + req.Text}, nil
+}
+
+##### 2.4 Client Side (Friend B)
+The client calls the server’s method just like it would call a local function.
+
+req := &pb.MessageRequest{Text: "Hello!"}
+res, err := client.SendMessage(ctx, req)
+fmt.Println(res.Reply)  // Outputs: "Got your message: Hello!"
+
+##### 2.5 Efficient Communication
+gRPC uses HTTP/2, which is faster than HTTP/1.1, and it supports multiplexing (multiple messages at the same time). It also uses Protobuf format, which is more efficient and faster than JSON.
+
+#### 2.3 Why using GRPC ? 
+
+1. Speed & Efficiency: gRPC uses HTTP/2 and Protobuf, which are faster and more compact than traditional HTTP/1.1 and JSON.
+=> Example: For services handling thousands of requests per second, gRPC is much faster than REST.
+
+2. Real-Time Communication: gRPC supports bi-directional streaming, allowing the client and server to send data continuously, like a live chat.
+=> Example: A chat app can easily handle back-and-forth messaging in real time with gRPC.
+
+3. Strong Typing: gRPC uses Protobuf for strict data types, catching errors at compile-time instead of run-time.
+=> Example: Unlike JSON in REST, which can lead to type issues, Protobuf ensures the data is structured correctly.
+
+4. Multi-Language Support: gRPC works with many languages (Go, Python, Java). Once defined in .proto, it generates code for different languages.
+=> Example: A Python client can easily communicate with a Go server.
+
+5. Low Latency, High Throughput: gRPC is built for fast, efficient communication, ideal for microservices and high-traffic systems.
+=> Example: In gaming backends, gRPC helps update player data in real time with minimal delays.
+
+#### 2.4 Summary of why GRPC :
++ Summary of Why gRPC:
++ Faster than REST due to HTTP/2 and Protobuf.
++ Supports Streaming, making real-time apps easier to build.
++ Cross-Language support for easy communication between services written in different languages.
++ Strongly Typed APIs with compile-time checks.
++ Ideal for Microservices because of its efficiency and scalability features.
+
+### 3. Compare Http 2.0 and Http 1.1
+![alt text](./images/http2_and_http1.1.png)
+
+#### HTTP/1.1 vs HTTP/2.0
+
+- HTTP (HyperText Transfer Protocol) is an application layer protocol in the TCP/IP protocol suite, used to transmit data on the Website.
+=> It defines how clients and servers communicate with each other through requests and responses.
+=> When you visit a website, your browser sends an HTTP request to the server and receives a response containing the web page content.
+
++ The birth of HTTP/1.1
+(*) Problems with HTTP/1.0
++ The first version of HTTP was HTTP/1.0, introduced in 1996. Although it met the initial needs of the web, HTTP/1.0 had some limitations:
++ Connections are not maintained: Each request/response requires a separate TCP connection, which takes time to establish and disconnect.
++ Low performance: Constantly opening and closing connections increases latency and reduces transmission efficiency.
+
+=> What problems does HTTP/1.1 solve?
+
+(*) To overcome the limitations of HTTP/1.0, HTTP/1.1 was introduced in 1997 with the following improvements:
+
++ Persistent Connections: Allows keeping a TCP connection open for multiple requests/responses, reducing connection setup time.
+
++ Request Pipelining: Allows sending multiple requests in succession without waiting for a response, however responses must still be received in order.
+
++ Cache improvements: Supports new headers for more efficient cache management.
+
++ Support for new methods and states: Adds methods such as, GET, PUT, PATCH, DELETE and new HTTP status codes.
+
+=> Problems of HTTP/1.1
+Although HTTP/1.1 has improved performance compared to HTTP/1.0, there are still some limitations:
+
++ Head-of-Line Blocking: Due to the pipeline mechanism, if a request is slow or blocked, the requests behind it must also wait, causing congestion.
++ Limited number of simultaneous connections: Browsers limit the number of simultaneous connections to the same server (usually 6 connections), leading to the need to split resources or use multiple subdomains to increase the number of connections, causing complexity.
++ Large overhead: HTTP headers are not compressed, increasing the size of transmitted data.
++ No support for parallel transmission on a connection: Cannot send and receive multiple data streams simultaneously on the same connection.
+
+=> The birth of HTTP/2 and What and how does HTTP/2 solve?
++ Multiplexing: Allows sending multiple requests and receiving multiple responses simultaneously on a single TCP connection.
+=> This eliminates the Head-of-Line Blocking problem at the HTTP level and reduces the number of connections required.
++ Header Compression: Use HPACK to compress HTTP headers, reducing the size of transmitted data and saving bandwidth.
++ Server Push: The server can proactively send resources that it predicts the client will need, reducing page load times.
++ Stream Prioritization: Allows prioritization of important data streams, improving user experience.
++ Binary Protocol: HTTP/2 moves from a text-based protocol to binary, allowing for more efficient data analysis and processing.
+
+![image.png](./images/compare_http.png)
+
+=> Conclusion Comparison between HTTP/1.1 and HTTP/2
++ Performance: HTTP/2 is superior thanks to multiplexing and header compression, reducing latency and increasing page load speed.
+
++ Connection usage: HTTP/2 uses a single TCP connection for all communications, while HTTP/1.1 requires multiple connections or waits due to the limit on the number of concurrent connections.
+
++ Complexity: HTTP/2 simplifies connection management and optimizes transmission, although implementation can be more complex due to the use of a binary protocol.
+
+### 4. Compare GRPC and REST
+1) GRPC using Protobuf and HTTP/2
+2) REST using Json and HTTP 1.1
+
+![alt text](image.png)
+
+## gRPC
+### Advantages:
+- **Fast Performance**:
+- **Binary Encoding**: Data is encoded in binary, making it compact and easy to decode quickly.
+- **HTTP/2**: Supports multiple requests on a single connection (multiplexing), reducing latency and improving performance.
+- **Streaming**: Supports sending and receiving data continuously without waiting for a request to complete.
+- **Defined Interface**: Uses Protobuf to define service interfaces, helping to create consistent client and server code.
+
+### Disadvantages:
+- **Binary Data**: Binary data is not easy to read and requires tools to decode, making debugging more difficult.
+- **Automatic Code Generation**: Tools are required to generate client and server code from Protobuf definitions.
+- **Tool Support**: Some tools and libraries may not support gRPC as well as REST.
+
+## REST
+### Advantages:
+- **Easy to Read and Use**: JSON is easy to read, work with, and debug, especially for developers and public APIs.
+- **JSON and REST Support**: Most languages ​​and tools support JSON and REST.
+- **Simple HTTP Protocol**: REST uses HTTP/1.1, which is very popular and easy to integrate with existing systems.
+- **Structure Freedom**: Does not require rigid definitions, allowing flexibility in API design.
+
+### Disadvantages:
+- **Text Encoding**: JSON is often larger and can increase latency due to data size and parsing.
+- **HTTP/1.1**: Does not support multiplexing, which can lead to higher latency when handling multiple concurrent requests.
+- **Lack of Streaming Support**: REST does not have built-in support for streaming, which can reduce performance in applications that require continuous data.
+
+## Summary
+- **gRPC**: Faster due to binary encoding and HTTP/2, good for internal services and when performance is important.
+- **REST**: Easier to read and integrate, good for public APIs or when performance is not a major factor.
+
+
 ### 5. What happen when you type a URL into your browser ? 
 ![alt text](./images/flow_type_URL_in_browser.png)
 
 ## Part 3: Demo client server communication GRPC
+
+To see gRPC in action, check out this [demo repository](link-to-repo) which includes sample code for both client and server implementations.
+
+### Example Code
+
+- **Server Code (Go):** [Link to code](link-to-server-code)
+- **Client Code (Python):** [Link to code](link-to-client-code)
+
