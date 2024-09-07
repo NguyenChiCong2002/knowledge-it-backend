@@ -272,32 +272,6 @@ Service: Chat has a method SendMessage.
 Request: MessageRequest sends a text.
 Response: MessageResponse sends back a reply.
 
-
-##### 2.2.2 Generate Code for Each Language
-gRPC automatically generates code from the .proto file for different programming languages. For example:
-
-Your Python service will understand the code.
-Your Go service will also understand the code.
-
-##### 2.3 Server Side (Friend A)
-The server implements the method from the .proto file and listens for requests. Think of the server like a friend waiting for a message.
-
-Here’s a server-side implementation in Go:
-
-func (s *server) SendMessage(ctx context.Context, req *pb.MessageRequest) (*pb.MessageResponse, error) {
-    return &pb.MessageResponse{Reply: "Got your message: " + req.Text}, nil
-}
-
-##### 2.4 Client Side (Friend B)
-The client calls the server’s method just like it would call a local function.
-
-req := &pb.MessageRequest{Text: "Hello!"}
-res, err := client.SendMessage(ctx, req)
-fmt.Println(res.Reply)  // Outputs: "Got your message: Hello!"
-
-##### 2.5 Efficient Communication
-gRPC uses HTTP/2, which is faster than HTTP/1.1, and it supports multiplexing (multiple messages at the same time). It also uses Protobuf format, which is more efficient and faster than JSON.
-
 #### 2.3 Why using GRPC ? 
 
 1. Speed & Efficiency: gRPC uses HTTP/2 and Protobuf, which are faster and more compact than traditional HTTP/1.1 and JSON.
