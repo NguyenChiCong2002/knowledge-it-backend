@@ -421,3 +421,5 @@ To see gRPC in action, check out this [demo repository](link-to-repo) which incl
 - **Server Code (Go):** [Link to code](link-to-server-code)
 - **Client Code (Python):** [Link to code](link-to-client-code)
 
+link github demo GRPC: 
+https://github.com/NguyenChiCong2002/demo_grpc_golang
