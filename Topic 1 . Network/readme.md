@@ -414,12 +414,7 @@ Although HTTP/1.1 has improved performance compared to HTTP/1.0, there are still
 
 ## Part 3: Demo client server communication GRPC
 
-To see gRPC in action, check out this [demo repository](link-to-repo) which includes sample code for both client and server implementations.
-
-### Example Code
-
-- **Server Code (Go):** [Link to code](link-to-server-code)
-- **Client Code (Python):** [Link to code](link-to-client-code)
+To see gRPC in action, check out this which includes sample code for both client and server implementations.
 
 link github demo GRPC: 
 https://github.com/NguyenChiCong2002/demo_grpc_golang
